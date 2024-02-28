@@ -31,7 +31,7 @@ __Ассистент РЖД__ - это чатбот, который поможе
 ## Установка
 1. Склонируйте репозиторий
 	```bash
-	git clone https://github.com/Dimmension/rasa_work.git
+	git clone https://github.com/Dimmension/rasa_rzhd_assistant.git
 	```
 2. Создание виртуального окружения venv
 	```bash
@@ -77,7 +77,7 @@ __Ассистент РЖД__ - это чатбот, который поможе
 	```
 
 	__Discord__
-	_Инструкция получения данных для Дискорда https://discord.com/developers/docs/getting-started
+	_Инструкция получения данных для Дискорда https://discord.com/developers/docs/getting-started_
 	```yml
 	access_token: '<YOUR_TOKEN>'
 	client_id: '<YOUR_BOT_ID>'
