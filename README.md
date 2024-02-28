@@ -76,6 +76,15 @@ __Ассистент РЖД__ - это чатбот, который поможе
 	webhook_url: 'https://<YOUR URL FROM NGROK>/webhooks/vk/webhook'
 	```
 
+	__Discord__
+	_Инструкция получения данных для Дискорда https://discord.com/developers/docs/getting-started
+	```yml
+	access_token: '<YOUR_TOKEN>'
+	client_id: '<YOUR_BOT_ID>'
+	client_secret: '<DISCORD_SECRET>'
+	webhook_url: 'https://pika-welcome-eagerly.ngrok-free.app/webhooks/telegram/webhook'
+
+	```
 ## Запуск
 #### Запуск в разных режимах работы
 1. В режиме консоли:

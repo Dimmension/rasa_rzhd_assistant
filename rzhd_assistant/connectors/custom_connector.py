@@ -42,8 +42,8 @@ class CustomConnector(InputChannel):
 
         @custom_webhook.route("/webhook", methods=["POST"])
         async def receive(request: Request) -> HTTPResponse:
-            text = request.json.get("text")  # method to fetch text
-            input_channel = self.name()  # method to fetch input channel
+            text = request.json.get("text")
+            input_channel = self.name()
             metadata = self.get_metadata(request)
 
             collector = CollectingOutputChannel()
