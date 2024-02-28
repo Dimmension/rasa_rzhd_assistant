@@ -122,10 +122,10 @@ __Ассистент РЖД__ - это чатбот, который поможе
 
 ___.env (actions)___
 ```python
-SERP_API_KEY = "0aff6c85610e01cf474c8606304bcacd8a664dbaf99dea34d8bea0c51dce545a"
+SERP_API_KEY = "<YOUR_TOKEN>"
 
-GOOGLE_API_KEY = "AIzaSyDtjcB-rbY3emMy9ctnoW68sRPPEXUD1uc"
-GOOGLE_SEARCH_ENGINE_ID = "e2019b57168b54430"
+GOOGLE_API_KEY = "<YOUR_TOKEN>>"
+GOOGLE_SEARCH_ENGINE_ID = "<YOUR_TOKEN>"
 
 URL_SERPAPI_STATS_PAGE = "https://serpapi.com/account?api_key="
 URL_GOOGLE_SEARCH = "https://customsearch.googleapis.com/customsearch/v1"
