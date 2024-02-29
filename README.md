@@ -1,3 +1,5 @@
+[![Python 3.6](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-380/)
+
 # Документация "Ассистент РЖД"
 __Ассистент РЖД__ - это чатбот, который поможет ответить на интересующие вопросы по теме ПТЭ. Чатбот написан с использованием платформы с открытым исходным кодом RASA.
 
@@ -59,6 +61,7 @@ __Ассистент РЖД__ - это чатбот, который поможе
 Вам потребуется получить токены в той среде взаимодействия в которой вы хотите, чтобы он использовался, а потом вписать их в __credentials.yml__:
 
 	__Telegram__
+
 	_Инструкция получения данных для телеграма: https://core.telegram.org/bots/tutorial#getting-ready_
 	```yml
 	### credentials.yml
@@ -68,6 +71,7 @@ __Ассистент РЖД__ - это чатбот, который поможе
 	```
 
 	__VK__
+
 	_Инструкция получения данных для ВК: https://dev.vk.com/ru/api/callback/getting-started_
 	```yml
 	### credentials.yml
@@ -77,6 +81,7 @@ __Ассистент РЖД__ - это чатбот, который поможе
 	```
 
 	__Discord__
+
 	_Инструкция получения данных для Дискорда https://discord.com/developers/docs/getting-started_
 	```yml
 	access_token: '<YOUR_TOKEN>'
@@ -113,17 +118,25 @@ __Ассистент РЖД__ - это чатбот, который поможе
 
 
     Нужно создать еще один venv для запуска ботов, по причине того что есть конфликты библиотек
+	
+	3.1 Перейите в директорию с ботами
     ```bash
-    python3 -m venv venv_bots
-    source ./venv_bots/bin/activate
+	cd bots
+	```
+	3.2 Создайте окружение и активируйте(не забудьте выйти из прошлого "deactivate")
+	```bash
+    python3 -m venv venv
+    source ./venv/bin/activate
     ```
+	3.3 Установите зависимости
     ```bash
     pip install -r bots_requirements.txt
     ```
+	3.4 Запустите всех ботов
     ```bash
-    python3 bots/telegram_api_bot.py
-    python3 bots/vk_api_bot.py
-    python3 bots/discord_api_bot.py
+    python3 telegram_api_bot.py
+    python3 vk_api_bot.py
+    python3 discord_api_bot.py
     ```
 
 ## Переменные окружения
