@@ -41,7 +41,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text='*Привет я Виталий, цифровой помощник Могу рассказать тебе о ПТЭ*',
-        # parse_mode=telegram.constants.PARSEMODE_MARKDOWN_V2,
         parse_mode='MarkdownV2',
     )
 

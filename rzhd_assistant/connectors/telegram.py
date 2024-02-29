@@ -1,7 +1,6 @@
 import asyncio
 import json
 import logging
-import aiogram
 
 from sanic import Blueprint, response
 from sanic.request import Request
@@ -15,6 +14,8 @@ from typing import Dict, Text, Any, List, Optional, Callable, Awaitable
 
 from rasa.core.channels.channel import InputChannel, UserMessage, OutputChannel
 from rasa.shared.exceptions import RasaException
+
+from . import vk
 
 logger = logging.getLogger(__name__)
 
@@ -66,7 +67,7 @@ class TelegramInput(InputChannel):
         self.verify = verify
         self.webhook_url = webhook_url
         self.debug_mode = debug_mode
-
+        logger.warning(f'INITIALIZATION OF TG_INPUT')
     @staticmethod
     def _is_user_message(message: Message) -> bool:
         return message.text is not None
@@ -80,16 +81,6 @@ class TelegramInput(InputChannel):
         @telegram_webhook.route("/", methods=["GET"])
         async def health(_: Request) -> HTTPResponse:
             return response.json({"status": "ok"})
-
-        @telegram_webhook.route("/set_webhook", methods=["GET", "POST"])
-        async def set_webhook(_: Request) -> HTTPResponse:
-            s = await out_channel.set_webhook(self.webhook_url)
-            if s:
-                logger.info("Webhook Setup Successful")
-                return response.text("Webhook setup successful")
-            else:
-                logger.warning("Webhook Setup Failed")
-                return response.text("Invalid webhook")
 
         @telegram_webhook.route("/webhook", methods=["GET", "POST"])
         async def message(request: Request) -> Any:
