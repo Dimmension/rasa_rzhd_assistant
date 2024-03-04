@@ -53,6 +53,8 @@ __Ассистент РЖД__ - это чатбот, который поможе
 	ngrok config add-authtoken <TOKEN>
 	```
 	Здесь необходимо создать свой аккаунт __ngrok__ и получить токен, а также создать __свой__ статический домен
+	
+	_Ссылка на получение статик домена: https://dashboard.ngrok.com/cloud-edge/domains_
 	```bash
 	ngrok http --domain=<YOUR URL> 5005
 	```

@@ -1,6 +1,5 @@
 import os
 import discord
-from discord.ext import commands
 from dotenv import load_dotenv
 from request_to_rasa import get_rasa_json
 

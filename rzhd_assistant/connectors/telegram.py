@@ -10,12 +10,11 @@ from aiogram.types import (
     Update,
     Message,
 )
-from typing import Dict, Text, Any, List, Optional, Callable, Awaitable
-
+from typing import Dict, Text, Any, Optional, Callable, Awaitable
+from aiogram.utils.exceptions import TelegramAPIError
 from rasa.core.channels.channel import InputChannel, UserMessage, OutputChannel
 from rasa.shared.exceptions import RasaException
 
-from . import vk
 
 logger = logging.getLogger(__name__)
 
@@ -68,6 +67,7 @@ class TelegramInput(InputChannel):
         self.webhook_url = webhook_url
         self.debug_mode = debug_mode
         logger.warning(f'INITIALIZATION OF TG_INPUT')
+
     @staticmethod
     def _is_user_message(message: Message) -> bool:
         return message.text is not None
@@ -76,11 +76,21 @@ class TelegramInput(InputChannel):
         self, on_new_message: Callable[[UserMessage], Awaitable[Any]]
     ) -> Blueprint:
         telegram_webhook = Blueprint("telegram_webhook", __name__)
-        out_channel = TelegramOutput(self.access_token)
+        out_channel = self.get_output_channel()
 
         @telegram_webhook.route("/", methods=["GET"])
         async def health(_: Request) -> HTTPResponse:
             return response.json({"status": "ok"})
+
+        @telegram_webhook.route("/set_webhook", methods=["GET", "POST"])
+        async def set_webhook(_: Request) -> HTTPResponse:
+            s = await out_channel.set_webhook(self.webhook_url)
+            if s:
+                logger.info("Webhook Setup Successful")
+                return response.text("Webhook setup successful")
+            else:
+                logger.warning("Webhook Setup Failed")
+                return response.text("Invalid webhook")
 
         @telegram_webhook.route("/webhook", methods=["GET", "POST"])
         async def message(request: Request) -> Any:
@@ -118,3 +128,16 @@ class TelegramInput(InputChannel):
                 return response.text("success")
 
         return telegram_webhook
+
+    def get_output_channel(self) -> TelegramOutput:
+        """Loads the telegram channel."""
+        channel = TelegramOutput(self.access_token)
+
+        try:
+            asyncio.run(channel.set_webhook(url=self.webhook_url))
+        except TelegramAPIError as error:
+            raise RasaException(
+                "Failed to set channel webhook: " + str(error)
+            ) from error
+
+        return channel
