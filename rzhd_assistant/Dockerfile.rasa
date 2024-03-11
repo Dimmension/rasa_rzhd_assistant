@@ -1,0 +1,19 @@
+FROM python:3.8
+
+WORKDIR /app
+
+COPY rasa_requirements.txt ./
+COPY rasa_connectors_requirements.txt ./
+
+USER root
+
+RUN python -m pip install -r rasa_requirements.txt
+RUN python -m pip install -r rasa_connectors_requirements.txt
+
+COPY . .
+
+RUN rasa train
+
+USER 1000
+
+ENTRYPOINT ["rasa"]

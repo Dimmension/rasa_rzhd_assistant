@@ -1,0 +1,25 @@
+version: '3.0'
+services:
+  rasa:
+    image: rasa/rasa-search:1.0
+    build:
+      context: .
+      dockerfile: Dockerfile.rasa
+    ports:
+      - 5005:5005
+    volumes:
+      - ./:/app
+    command:
+      - run
+      - --enable-api
+      - --debug
+  
+  action-server:
+    image: rasa/rasa-actions:1.0
+    build:
+      context: .
+      dockerfile: Dockerfile.actions
+    volumes:
+      - ./actions:/app/actions
+    ports:
+      - 5055:5055

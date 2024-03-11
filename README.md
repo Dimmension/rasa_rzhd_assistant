@@ -161,3 +161,13 @@ TELEGRAM_TOKEN = "<YOUR_TOKEN>"
 VK_TOKEN = "<YOUR_TOKEN>"
 DISCORD_TOKEN = "<YOUR_TOKEN>"
 ```
+## Docker
+
+```docker
+docker-compose up
+```
+
+Если нет docker images запускать с аргументом --build
+```docker
+docker-compose up --build
+```
