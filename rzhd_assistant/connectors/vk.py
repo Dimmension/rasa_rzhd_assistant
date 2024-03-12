@@ -1,4 +1,3 @@
-import asyncio
 import json
 import logging
 
@@ -9,10 +8,9 @@ from sanic.response import HTTPResponse
 from vk_api import VkApi
 from vk_api.utils import get_random_id
 
-from typing import Dict, Text, Any, List, Optional, Callable, Awaitable
+from typing import Dict, Text, Any, Optional, Callable, Awaitable
 
 from rasa.core.channels.channel import InputChannel, UserMessage, OutputChannel
-from rasa.shared.exceptions import RasaException
 
 logger = logging.getLogger(__name__)
 
@@ -31,8 +29,6 @@ class VkOutput(OutputChannel):
     async def send_text_message(
         self, recipient_id: Text, text: Text, **kwargs: Any,
     ) -> None:
-        logger.warning(
-            f'MESSAGE, THAT WILL BE SENDED: to {recipient_id}, with TEXT: {text}')
         """Send text message."""
         for message_part in text.strip().split('\n\n'):
             self.vk.method('messages.send', {
@@ -50,7 +46,10 @@ class VkInput(InputChannel):
         return 'vk'
 
     @classmethod
-    def from_credentials(cls, credentials: Optional[Dict[Text, Any]]) -> InputChannel:
+    def from_credentials(
+        cls,
+        credentials: Optional[Dict[Text, Any]],
+    ) -> InputChannel:
         """Load creditionals"""
         if not credentials:
             cls.raise_missing_credentials_exception()

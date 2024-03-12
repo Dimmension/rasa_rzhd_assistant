@@ -138,7 +138,8 @@ class ActionRequestSearch(Action):
         """Run an action script.
 
         Args:
-            dispatcher (CollectingDispatcher): obj to generate responses to send back to the user.
+            dispatcher (CollectingDispatcher): obj to generate responses \
+                            to send back to the user.
             tracker (Tracker): obj to get access bot memory.
             domain (Dict[Text, Any]): _description_
 

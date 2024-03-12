@@ -20,7 +20,8 @@ def get_rasa_answer(text: str) -> str:
     rasa_response = requests.post(url, json=json_obj, timeout=10).json()
 
     try:
-        answer = [rasa_response[line]['text'] for line, _ in enumerate(rasa_response)]
+        answer = [rasa_response[line]['text']
+                  for line, _ in enumerate(rasa_response)]
     except KeyError:
         answer = ['Произошла ошибка, попробуйте еще раз!']
 

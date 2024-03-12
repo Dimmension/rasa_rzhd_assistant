@@ -45,7 +45,10 @@ class TelegramInput(InputChannel):
         return "telegram"
 
     @classmethod
-    def from_credentials(cls, credentials: Optional[Dict[Text, Any]]) -> InputChannel:
+    def from_credentials(
+        cls,
+        credentials: Optional[Dict[Text, Any]],
+    ) -> InputChannel:
         if not credentials:
             cls.raise_missing_credentials_exception()
 
@@ -66,7 +69,6 @@ class TelegramInput(InputChannel):
         self.verify = verify
         self.webhook_url = webhook_url
         self.debug_mode = debug_mode
-        logger.warning(f'INITIALIZATION OF TG_INPUT')
 
     @staticmethod
     def _is_user_message(message: Message) -> bool:
