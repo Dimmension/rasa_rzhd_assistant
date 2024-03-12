@@ -35,10 +35,21 @@ __Ассистент РЖД__ - это чатбот, который поможе
 	```bash
 	git clone https://github.com/Dimmension/rasa_rzhd_assistant.git
 	```
-2. Создание виртуального окружения venv
+2. Создание и активация виртуального окружения venv.
+	__Linux__
 	```bash
 	python3 -m venv venv
 	source ./venv/bin/activate
+	```
+	__Windows(cmd)__
+	```bash
+	python -m venv venv
+	venv\Scripts\activate.bat
+	```
+	__Windows(PowerShell)__
+	```bash
+	python -m venv venv
+	venv/Scripts/Activate.ps1
 	```
 3. Установка зависимостей
 	```bash
@@ -48,19 +59,26 @@ __Ассистент РЖД__ - это чатбот, который поможе
 
 1. __Настройка ngrok__
 	
-	[__Гайд ngrok__](https://ngrok.com/docs/getting-started/)
+	Установить ngrok по [___инструкции___](https://ngrok.com/docs/getting-started/).
+	Далее нужно зарегистрироваться на сайте [__ngrok__](https://dashboard.ngrok.com/login) и получить токен [__тут__](https://dashboard.ngrok.com/get-started/your-authtoken), выполнить команду ниже или готовую команду на сайте.
 	```bash
 	ngrok config add-authtoken <TOKEN>
 	```
-	Здесь необходимо создать свой аккаунт __ngrok__ и получить токен, а также создать __свой__ статический домен
-	
-	_Ссылка на получение статик домена: https://dashboard.ngrok.com/cloud-edge/domains_
+	Необходимо создать [__статический домен__](https://dashboard.ngrok.com/cloud-edge/domains).
+	_Пример:_
+	```
+	crucial-boar-strangely.ngrok-free.app
+	```
+	Далее запуситить ngrok на своем компютере с портом 5005.
 	```bash
-	ngrok http --domain=<YOUR URL> 5005
+	ngrok http --domain=<YOUR_STATIC_DOMAIN> 5005
 	```
 
+	> __ДЛЯ РАБОТЫ В _МОНОКАНАЛЬНОМ_ РЕЖИМЕ NGROK НЕ НУЖЕН__ 
+
 2. __Токены__ 
-Вам потребуется получить токены в той среде взаимодействия в которой вы хотите, чтобы он использовался, а потом вписать их в __credentials.yml__:
+
+	Вам потребуется получить токены в той среде взаимодействия в которой вы хотите, чтобы он использовался, а потом вписать их в __credentials.yml__:
 
 	__Telegram__
 
@@ -84,15 +102,36 @@ __Ассистент РЖД__ - это чатбот, который поможе
 
 	__Discord__
 
-	_Инструкция получения данных для Дискорда https://discord.com/developers/docs/getting-started_
-	```yml
-	access_token: '<YOUR_TOKEN>'
-	client_id: '<YOUR_BOT_ID>'
-	client_secret: '<DISCORD_SECRET>'
-	webhook_url: 'https://pika-welcome-eagerly.ngrok-free.app/webhooks/telegram/webhook'
+	_Инструкция получения токена Дискорда https://discord.com/developers/docs/getting-started_
 
-	```
+## Переменные окружения
+В директориях __bots__ и __actions__ надо создать __.env__ файлы со следующим содержанием.
+
+___.env (actions)___
+```python
+SERP_API_KEY = "<YOUR_TOKEN>"				# 0aff6c85610e01cf474c8606304bcacd8a664dbaf00dea34d8bea0c51dce000a
+
+GOOGLE_API_KEY = "<YOUR_TOKEN>"				# AIaaSyDtjcB-rbY3emMy9ctnoW99sRPPEXUD1uc
+GOOGLE_SEARCH_ENGINE_ID = "<YOUR_TOKEN>"	# e2019b57168b54430
+
+URL_SERPAPI_STATS_PAGE = "https://serpapi.com/account?api_key="
+URL_GOOGLE_SEARCH = "https://customsearch.googleapis.com/customsearch/v1"
+```
+
+___.env (bots)___
+```python
+TELEGRAM_TOKEN = "<YOUR_TOKEN>" # 0019292000:AAGzgVeioeDWhSFwoeQLt3ZvMhgqd88RVHc
+VK_TOKEN = "<YOUR_TOKEN>" 		# vk1.a.cjKmtkTYN6kdEYKq3_EbMgAWducR...149gamSUJcI7-6v7Af6DYgLLwzqmjYSbABk7PmfVEf7oxx_gA-nelwXilQ
+DISCORD_TOKEN = "<YOUR_TOKEN>" 	# MTIwNzY1MDk3NjAyMzE5MzQ0Mw.GbqbZC.u7zCrNzvoGC8zTs3QqWLUrY_YTGo8tJlEICZb4
+```
+
 ## Запуск
+
+Перед запуском необходимо обучить модель, если она отсутствует в директории __models__.
+
+```bash
+rasa train # Обучение модели rasa
+```
 #### Запуск в разных режимах работы
 1. В режиме консоли:
 	```bash
@@ -104,7 +143,7 @@ __Ассистент РЖД__ - это чатбот, который поможе
 2. С использованием мессенджеров(Мультиканальность)
 		
 	```bash
-	rasa run --enable-api --cors "*" # Запуск модели 
+	rasa run --enable-api # Запуск модели 
 	```
 	```bash
 	rasa run actions # Запуск custom actions
@@ -112,7 +151,7 @@ __Ассистент РЖД__ - это чатбот, который поможе
 3. С использованием мессенджеров(Моноканальность)
 		
 	```bash
-	rasa run --enable-api --cors "*" # Запуск модели 
+	rasa run --enable-api # Запуск модели 
 	```
 	```bash
 	rasa run actions # Запуск custom actions
@@ -140,27 +179,6 @@ __Ассистент РЖД__ - это чатбот, который поможе
     python3 vk_api_bot.py
     python3 discord_api_bot.py
     ```
-
-## Переменные окружения
-В директориях __bots__ и __actions__ надо создать __.env__ файлы со следующим содержанием.
-
-___.env (actions)___
-```python
-SERP_API_KEY = "<YOUR_TOKEN>"
-
-GOOGLE_API_KEY = "<YOUR_TOKEN>>"
-GOOGLE_SEARCH_ENGINE_ID = "<YOUR_TOKEN>"
-
-URL_SERPAPI_STATS_PAGE = "https://serpapi.com/account?api_key="
-URL_GOOGLE_SEARCH = "https://customsearch.googleapis.com/customsearch/v1"
-```
-
-___.env (bots)___
-```python
-TELEGRAM_TOKEN = "<YOUR_TOKEN>" 
-VK_TOKEN = "<YOUR_TOKEN>"
-DISCORD_TOKEN = "<YOUR_TOKEN>"
-```
 ## Docker
 
 ```docker
@@ -170,4 +188,17 @@ docker-compose up
 Если нет docker images запускать с аргументом --build
 ```docker
 docker-compose up --build
+```
+
+В случае, если поднимаем docker-compose, файл endpoints.yml нужно изменить:
+```yml
+### endpoints.yml
+action_endpoint:
+ url: "http://action-server:5055/webhook"
+```
+В случае, если запускаем без docker, файл endpoints.yml не изменяем:
+```yml
+### endpoints.yml
+action_endpoint:
+ url: "http://localhost:5055/webhook"
 ```

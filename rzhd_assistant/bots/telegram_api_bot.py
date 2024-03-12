@@ -6,7 +6,6 @@ and get JSON data with answer from RASA.
 """
 import os
 
-import telegram
 import logging
 from dotenv import load_dotenv
 from telegram import Update
@@ -18,14 +17,14 @@ from telegram.ext import (
     ContextTypes,
 )
 
-from request_to_rasa import get_rasa_json
+from request_to_rasa import get_rasa_answer
 
 load_dotenv()
 
-TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 
 logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     level=logging.INFO,
 )
 
@@ -33,26 +32,25 @@ logging.basicConfig(
 async def rasa_answer(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text=get_rasa_json(update.message.text),
+        text=get_rasa_answer(update.message.text),
     )
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text='*Привет я Виталий, цифровой помощник Могу рассказать тебе о ПТЭ*',
-        parse_mode='MarkdownV2',
+        text="*Привет я Виталий, цифровой помощник Могу рассказать тебе о ПТЭ*",
+        parse_mode="MarkdownV2",
     )
 
 
-if __name__ == '__main__':
-    application = (
-        ApplicationBuilder().token(TELEGRAM_TOKEN).build()
-    )
+if __name__ == "__main__":
+    application = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
 
-    start_handler = CommandHandler('start', start)
+    start_handler = CommandHandler("start", start)
     echo_handler = MessageHandler(
-        filters.TEXT & (~filters.COMMAND), rasa_answer,
+        filters.TEXT & (~filters.COMMAND),
+        rasa_answer,
     )
 
     application.add_handler(start_handler)

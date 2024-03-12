@@ -1,10 +1,8 @@
 """Module RASA that provides actions."""
-import json
 import os
 import requests
 
 from typing import Any, Dict, List, Text
-from urllib.request import urlopen
 
 from dotenv import load_dotenv
 from rasa_sdk import Action, Tracker
@@ -20,6 +18,10 @@ URL_SERPAPI_STATS_PAGE = os.getenv('URL_SERPAPI_STATS_PAGE')
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 GOOGLE_SEARCH_ENGINE_ID = os.getenv('GOOGLE_SEARCH_ENGINE_ID')
 URL_GOOGLE_SEARCH = os.getenv('URL_GOOGLE_SEARCH')
+
+serp_stats_params = {
+    'api_key': SERP_API_KEY,
+}
 
 serp_params = {
     'engine': 'google',
@@ -93,9 +95,11 @@ def get_answer(request: str) -> str:
         str: answer that was recieved by searching in Google.
     """
     # Get count of left requests in SerpApi
-    with urlopen(f'{URL_SERPAPI_STATS_PAGE}{SERP_API_KEY}') as url:
-        json_raw = json.load(url)
-        requests_left = json_raw['plan_searches_left']
+    response = requests.get(
+        URL_SERPAPI_STATS_PAGE, params=serp_stats_params, timeout=5,
+    )
+    search_results = response.json()
+    requests_left = search_results['plan_searches_left']
 
     if request == '':
         return 'Вы ввели пустую строку!'

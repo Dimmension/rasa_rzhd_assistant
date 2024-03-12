@@ -7,12 +7,15 @@ and get JSON data with answer from RASA.
 import os
 import vk_api
 
+from dotenv import load_dotenv
 from vk_api.utils import get_random_id
 from vk_api.longpoll import VkLongPoll, VkEventType
-from request_to_rasa import get_rasa_json
+from request_to_rasa import get_rasa_answer
+
+load_dotenv()
 
 VK_TOKEN = os.getenv('VK_TOKEN')
-vk = vk_api.VkApi(token='vk1.a.0c1isMsL1uhUmpFE_6IKm_WQUO4hYJZfaCNcXhXwN3PAAzvrfilVGvEcePbL6joV2QP5bNFAOXz0zb_dnbuIdAnPqmc4_J_IwsYhwIFEy-2cSwCYLp9mDcbJy2zlG9dm4FBPM5r-FP_DHO_y2OIe8lJ_ibDth-pnpMvvCv_3puL9f8G2fgZTBstE2-SYJ9yo7H232RoJoV7l7wTE-O7x1Q')
+vk = vk_api.VkApi(token=VK_TOKEN)
 
 
 def write_msg(user_id, message):
@@ -36,7 +39,7 @@ def run():
     for event in longpoll.listen():
         if event.type == VkEventType.MESSAGE_NEW:
             if event.to_me:
-                write_msg(event.user_id, get_rasa_json(event.text))
+                write_msg(event.user_id, get_rasa_answer(event.text))
 
 
 if __name__ == '__main__':
