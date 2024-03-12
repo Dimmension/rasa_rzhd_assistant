@@ -36,6 +36,9 @@ __Ассистент РЖД__ - это чатбот, который поможе
 	git clone https://github.com/Dimmension/rasa_rzhd_assistant.git
 	```
 2. Создание и активация виртуального окружения venv.
+
+	>_Перейдите в корневую директорию перед созданием venv._
+	
 	__Linux__
 	```bash
 	python3 -m venv venv
@@ -52,9 +55,21 @@ __Ассистент РЖД__ - это чатбот, который поможе
 	venv/Scripts/Activate.ps1
 	```
 3. Установка зависимостей
+	Минимальные пакеты для запуска rasa в режиме shell.
 	```bash
-	pip install -r rasa_requirements.txt
+	pip install -r rzhd_assistant/rasa_requirements.txt
 	```
+	
+	Пакеты для запуска actions (чтобы работала функция поиска). 
+	```bash
+	pip install -r rzhd_assistant/rasa_actions_requirements.txt
+	```
+
+	Пакеты для запуска rasa в режиме run (необходимо для запуска connector'ов мессенжеров).
+	```bash
+	pip install -r rzhd_assistant/rasa_connectors_requirements.txt
+	```
+
 ## Настройка
 
 1. __Настройка ngrok__
