@@ -72,24 +72,24 @@ __Ассистент РЖД__ - это чатбот, который поможе
 
 ## Ngrok
 
-	__Настройка ngrok__
-	
-	Установить ngrok по [___инструкции___](https://ngrok.com/docs/getting-started/).
-	Далее нужно зарегистрироваться на сайте [__ngrok__](https://dashboard.ngrok.com/login) и получить токен [__тут__](https://dashboard.ngrok.com/get-started/your-authtoken), выполнить команду ниже или готовую команду на сайте.
-	```bash
-	ngrok config add-authtoken <TOKEN>
-	```
-	Необходимо создать [__статический домен__](https://dashboard.ngrok.com/cloud-edge/domains).
-	_Пример:_
-	```
-	crucial-boar-strangely.ngrok-free.app
-	```
-	Далее запуситить ngrok на своем компютере с портом 5005.
-	```bash
-	ngrok http --domain=<YOUR_STATIC_DOMAIN> 5005
-	```
+__Настройка ngrok__
 
-	> __ДЛЯ РАБОТЫ В _МОНОКАНАЛЬНОМ_ РЕЖИМЕ NGROK НЕ НУЖЕН__ 
+Установить ngrok по [___инструкции___](https://ngrok.com/docs/getting-started/).
+Далее нужно зарегистрироваться на сайте [__ngrok__](https://dashboard.ngrok.com/login) и получить токен [__тут__](https://dashboard.ngrok.com/get-started/your-authtoken), выполнить команду ниже или готовую команду на сайте.
+```bash
+ngrok config add-authtoken <TOKEN>
+```
+Необходимо создать [__статический домен__](https://dashboard.ngrok.com/cloud-edge/domains).
+_Пример:_
+```
+crucial-boar-strangely.ngrok-free.app
+```
+Далее запуситить ngrok на своем компютере с портом 5005.
+```bash
+ngrok http --domain=<YOUR_STATIC_DOMAIN> 5005
+```
+
+> __ДЛЯ РАБОТЫ В _МОНОКАНАЛЬНОМ_ РЕЖИМЕ NGROK НЕ НУЖЕН__ 
 
 ## __Токены__
 
