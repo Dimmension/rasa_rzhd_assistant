@@ -70,9 +70,9 @@ __Ассистент РЖД__ - это чатбот, который поможе
 	pip install -r rzhd_assistant/rasa_connectors_requirements.txt
 	```
 
-## Настройка
+## Ngrok
 
-1. __Настройка ngrok__
+	__Настройка ngrok__
 	
 	Установить ngrok по [___инструкции___](https://ngrok.com/docs/getting-started/).
 	Далее нужно зарегистрироваться на сайте [__ngrok__](https://dashboard.ngrok.com/login) и получить токен [__тут__](https://dashboard.ngrok.com/get-started/your-authtoken), выполнить команду ниже или готовую команду на сайте.
@@ -91,35 +91,73 @@ __Ассистент РЖД__ - это чатбот, который поможе
 
 	> __ДЛЯ РАБОТЫ В _МОНОКАНАЛЬНОМ_ РЕЖИМЕ NGROK НЕ НУЖЕН__ 
 
-2. __Токены__ 
+## __Токены__
 
-	Вам потребуется получить токены в той среде взаимодействия в которой вы хотите, чтобы он использовался, а потом вписать их в __credentials.yml__:
+1. __Поисковая система__
+
+	__SerpApi__
+
+	Необходимо получить токен SerpApi [__здесь__](https://serpapi.com/manage-api-key)
+
+	__Custom Search API__
+
+	a) Шаги получения __API key__:
+
+	1. Зайдите [сюда](https://console.cloud.google.com/) 
+
+	2. Cоздайте New Project
+
+	3. Перейдите по [ссылке](https://console.cloud.google.com/)
+
+	4. APIs & Services 
+
+	5. Добавьте Custom Search API (Enable APIs and Servies)
+
+	5. Credentials
+
+	6. Create Credentials
+
+	7. Show Key
+
+	b) Шаги получения __Search Engine ID__
+
+	1. Зайдите [сюда](https://programmablesearchengine.google.com/controlpanel/all)
+
+	2. Добавьте поисковую систему(при создании выбрать "__Поиск во всем интернете__"!)
+
+	3. Настроить
+
+	4. Идентификатор поисковой системы
+
+2. __Мессенджеры:__
+
+	Потребуется получить токены в той среде взаимодействия в которой вы хотите, чтобы он использовался, а потом вписать их в __credentials.yml__:
 
 	__Telegram__
 
 	_Инструкция получения данных для телеграма: https://core.telegram.org/bots/tutorial#getting-ready_
-	```yml
-	### credentials.yml
-	access_token: 'YOUR_TOKEN'
-	verify: 'BOT_USERNAME'
-	webhook_url: 'https://<YOUR URL FROM NGROK>/webhooks/telegram/webhook'
-	```
+
 
 	__VK__
 
 	_Инструкция получения данных для ВК: https://dev.vk.com/ru/api/callback/getting-started_
-	```yml
-	### credentials.yml
-	access_token: 'YOUR_TOKEN'
-	secret_key: 'SECRET_KEY'
-	webhook_url: 'https://<YOUR URL FROM NGROK>/webhooks/vk/webhook'
-	```
+
+	Шаги получения токена VK и настройки API:
+	1. Создать сообщество
+	2. Включить сообщения сообщества (Управление -> Сообщения -> Сообщения сообщества)
+	3. Создать токен (Управление -> Настройки -> Работа с API -> Ключи доступа -> Создать ключ (выбрать все пункты))
+	4. Выбрать типы событий Callback (Callback API -> Типы событий -> Входящие сообщения)
+	5. Включить Long Poll API (Long Poll API -> Настройки -> Включено)
+	6. Выбрать типы событий LongPoll (Long Poll API -> Типы событий -> Входящие сообщения)
+	7. Получить secret key (Callback API -> Настройки сервера -> Строка, которую должен вернуть сервер: <ТУТ ВАШ secret key>)
+	8. Вставить URL с ngrok доменом (Адрес -> https://<ДОМЕН NGROK>/webhooks/vk/webhook) 
 
 	__Discord__
 
-	_Инструкция получения токена Дискорда https://discord.com/developers/docs/getting-started_
+	_Инструкция получения токена Дискорда - [__инструкция__](https://habr.com/ru/articles/676390/#:~:text=%D0%B2%D0%BA%D0%BB%D1%8E%D1%87%D0%B0%D0%B5%D0%BC%20%D1%80%D0%B5%D0%B6%D0%B8%D0%BC%20%D1%80%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%87%D0%B8%D0%BA%D0%B0.-,%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20%D1%82%D0%BE%D0%BA%D0%B5%D0%BD%D0%B0,-%D0%94%D0%BB%D1%8F%20%D0%BD%D0%B0%D1%87%D0%B0%D0%BB%D0%B0%20%D0%BD%D0%B0%D0%BC)_
 
-## Переменные окружения
+	> __!! Для общения с ботом нужно перейти в личные сообщения с ним (Профиль бота - Отправить сообщение) !!__
+## Настройка переменных окружения и credentials
 В директориях __bots__ и __actions__ надо создать __.env__ файлы со следующим содержанием.
 
 ___.env (actions)___
@@ -139,6 +177,25 @@ TELEGRAM_TOKEN = "<YOUR_TOKEN>" # 0019292000:AAGzgVeioeDWhSFwoeQLt3ZvMhgqd88RVHc
 VK_TOKEN = "<YOUR_TOKEN>" 		# vk1.a.cjKmtkTYN6kdEYKq3_EbMgAWducR...149gamSUJcI7-6v7Af6DYgLLwzqmjYSbABk7PmfVEf7oxx_gA-nelwXilQ
 DISCORD_TOKEN = "<YOUR_TOKEN>" 	# MTIwNzY1MDk3NjAyMzE5MzQ0Mw.GbqbZC.u7zCrNzvoGC8zTs3QqWLUrY_YTGo8tJlEICZb4
 ```
+
+В файл __credentials.yml__ необходимо добавить полученные токены:
+
+```yml
+### credentials.yml
+connectors.telegram.TelegramInput:
+access_token: 'YOUR_TOKEN'
+verify: 'BOT_USERNAME'
+webhook_url: 'https://<YOUR_STATIC_DOMAIN>/webhooks/telegram/webhook'
+```
+
+```yml
+### credentials.yml
+connectors.vk.VkInput:
+access_token: 'YOUR_TOKEN'
+secret_key: 'SECRET_KEY'
+webhook_url: 'https://<YOUR_STATIC_DOMAIN>/webhooks/vk/webhook'
+```
+
 
 ## Запуск
 
@@ -217,3 +274,7 @@ action_endpoint:
 action_endpoint:
  url: "http://localhost:5055/webhook"
 ```
+
+## Пример работы
+![alt text](./applications/shell_example.png)
+![alt text](./applications/telegram_example.png)
