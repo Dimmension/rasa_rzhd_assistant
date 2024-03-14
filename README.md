@@ -153,9 +153,18 @@ ngrok http --domain=<YOUR_STATIC_DOMAIN> 5005
 	8. Вставить URL с ngrok доменом (Адрес -> https://<ДОМЕН NGROK>/webhooks/vk/webhook) 
 
 	__Discord__
-
-	_Инструкция получения токена Дискорда - [__инструкция__](https://habr.com/ru/articles/676390/#:~:text=%D0%B2%D0%BA%D0%BB%D1%8E%D1%87%D0%B0%D0%B5%D0%BC%20%D1%80%D0%B5%D0%B6%D0%B8%D0%BC%20%D1%80%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%87%D0%B8%D0%BA%D0%B0.-,%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20%D1%82%D0%BE%D0%BA%D0%B5%D0%BD%D0%B0,-%D0%94%D0%BB%D1%8F%20%D0%BD%D0%B0%D1%87%D0%B0%D0%BB%D0%B0%20%D0%BD%D0%B0%D0%BC)_
-
+	
+	Шаги получения токена Discord и настройки бота:
+	1. Перейдите на [портал разработков Discord](https://discord.com/developers/applications)
+	2. Discord токен:
+		Applications -> Bot -> часть Build-A-Bot -> Token
+	4. 	Добавить сервер в Discord:
+			Discord -> плюс (Добавить сервер) -> Свой шаблон -> выбрать любое -> задать название
+	3. Discord URL-ссылка:
+		OAuth2 -> OAuth2 URL Generator -> Scopes (Выбрать bot)
+					       -> Bot Permissions (Administrator)	
+		Перейти по ссылке Generated URL -> Добавить на сервер -> Выбрать добавленный Discord-сервер
+	
 	> __!! Для общения с ботом нужно перейти в личные сообщения с ним (Профиль бота - Отправить сообщение) !!__
 ## Настройка переменных окружения и credentials
 В директориях __bots__ и __actions__ надо создать __.env__ файлы со следующим содержанием.
