@@ -4,10 +4,8 @@ Module that provides functions for connect RASA and Telegram Bots.
 It send POST request with JSON data to RASA server
 and get JSON data with answer from RASA.
 """
-import os
 
 import logging
-from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import (
     filters,
@@ -17,10 +15,10 @@ from telegram.ext import (
 )
 
 from request_to_rasa import get_rasa_answer
+from rzhd_assistant.vault import vault_utils
 
-load_dotenv()
 
-TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
+TELEGRAM_TOKEN = vault_utils.rtrieve_secret('TELEGRAM_TOKEN')
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',

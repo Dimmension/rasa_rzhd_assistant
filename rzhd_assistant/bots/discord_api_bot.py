@@ -1,10 +1,8 @@
-import os
 from discord import Client, Intents
-from dotenv import load_dotenv
 from request_to_rasa import get_rasa_answer
+from rzhd_assistant.vault import vault_utils
 
-load_dotenv()
-DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
+DISCORD_TOKEN = vault_utils.rtrieve_secret('DISCORD_TOKEN')
 bot = Client(intents=Intents.default())
 
 

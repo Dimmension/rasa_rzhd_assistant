@@ -4,17 +4,14 @@ Module that provides functions for connect RASA and VK Bots via LongPools.
 It send POST request with JSON data to RASA server
 and get JSON data with answer from RASA.
 """
-import os
 import vk_api
 
-from dotenv import load_dotenv
 from vk_api.utils import get_random_id
 from vk_api.longpoll import VkLongPoll, VkEventType
 from request_to_rasa import get_rasa_answer
+from rzhd_assistant.vault import vault_utils
 
-load_dotenv()
-
-VK_TOKEN = os.getenv('VK_TOKEN')
+VK_TOKEN = vault_utils.rtrieve_secret('VK_TOKEN')
 vk = vk_api.VkApi(token=VK_TOKEN)
 
 

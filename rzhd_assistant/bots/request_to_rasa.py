@@ -1,6 +1,5 @@
 import requests
 
-
 def get_rasa_answer(text: str) -> str:
     """Get response in JSON format from RASA and process it.
 

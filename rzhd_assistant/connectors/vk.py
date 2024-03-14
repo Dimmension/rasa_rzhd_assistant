@@ -12,6 +12,8 @@ from typing import Dict, Text, Any, Optional, Callable, Awaitable
 
 from rasa.core.channels.channel import InputChannel, UserMessage, OutputChannel
 
+from vault import vault_utils
+
 logger = logging.getLogger(__name__)
 
 
@@ -59,15 +61,18 @@ class VkInput(InputChannel):
             credentials.get('secret_key'),
             credentials.get('webhook_url'),
         )
+    
+    @staticmethod
+    def get_access_token():
+        return vault_utils.rtrieve_secret('VK_TOKEN')
 
     def __init__(
         self,
-        access_token: Optional[Text],
         secret_key: Optional[Text],
         webhook_url: Optional[Text],
         debug_mode: bool = True,
     ) -> None:
-        self.access_token = access_token
+        self.access_token = self.get_access_token()
         self.secret_key = secret_key
         self.webhook_url = webhook_url
         self.debug_mode = debug_mode

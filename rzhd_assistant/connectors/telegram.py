@@ -15,6 +15,7 @@ from aiogram.utils.exceptions import TelegramAPIError
 from rasa.core.channels.channel import InputChannel, UserMessage, OutputChannel
 from rasa.shared.exceptions import RasaException
 
+from vault import vault_utils
 
 logger = logging.getLogger(__name__)
 
@@ -53,20 +54,19 @@ class TelegramInput(InputChannel):
             cls.raise_missing_credentials_exception()
 
         return cls(
-            credentials.get("access_token"),
-            credentials.get("verify"),
             credentials.get("webhook_url"),
         )
 
+    @staticmethod
+    def get_access_token():
+        return vault_utils.rtrieve_secret('TELEGRAM_TOKEN')
+
     def __init__(
         self,
-        access_token: Optional[Text],
-        verify: Optional[Text],
         webhook_url: Optional[Text],
         debug_mode: bool = True,
     ) -> None:
-        self.access_token = access_token
-        self.verify = verify
+        self.access_token = self.get_access_token()
         self.webhook_url = webhook_url
         self.debug_mode = debug_mode
 
