@@ -6,6 +6,10 @@ __pycache__/
 # C extensions
 *.so
 
+# RASA
+*.tar.gz
+.rasa/
+
 # Distribution / packaging
 .Python
 build/
