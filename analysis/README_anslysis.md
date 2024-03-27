@@ -1,5 +1,5 @@
-## BI Rasa
-BI Rasa - решение для сбора информации о диалоговых сессиях Rasa и их анализа с помощью сервиса DataLens. 
+## Analysis Rasa
+Analysis Rasa - решение для сбора информации о диалоговых сессиях Rasa и их анализа с помощью сервиса DataLens. 
 
 ### Запуск PostgresDB Docker
 Решение будет использовать PostgresSQL базу данных в докер контейнере.
@@ -14,9 +14,9 @@ docker run -d \
 ```
 
 ### Изменение в проекте Rasa
-Необходимо добавить данные своей БД в tracker store в __credentials.yml__, место куда сохраняется логи о диалоговых сессиях
+Необходимо добавить данные своей БД в tracker store в __endpoints.yml__, место куда сохраняется логи о диалоговых сессиях
 ```yml
-### credentials.yml
+### endpoints.yml
 tracker_store:
     type: SQL
     dialect: "postgresql"  # the dialect used to interact with the db
@@ -25,7 +25,7 @@ tracker_store:
     username: "test" # username used for authentication
     password: "test" # password used for authentication
 ```
-Теперь все логи будут сохранятся в развернутой базе данных.
+Теперь все логи будут сохранятся в развернутой базе данных "events".
 
 ### Обработка информации о диалоговых сессиях
 1. Создание и активация виртуального окружения venv.
@@ -49,15 +49,15 @@ tracker_store:
 	```
 2. Установка пакетов
 	Минимальные пакеты для запуска rasa в режиме shell.
-	```bash
-	pip install -r bi_requirements.txt
+	```bashc
+	pip install -r bi_requirements.txt --no-cache-dir
 	```
 3. Переменные среды
 
     __.env__
     ```
     PG_HOST=localhost
-    PG_PORT=5432
+    PG_PORT=38746
     PG_USER=test
     PG_PASSWORD=test
     PG_DBNAME=test

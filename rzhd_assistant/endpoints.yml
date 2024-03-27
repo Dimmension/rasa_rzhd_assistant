@@ -30,6 +30,7 @@ tracker_store:
     dialect: "postgresql"  # the dialect used to interact with the db
     url: "localhost"  # (optional) host of the sql db, e.g. "localhost"
     db: "test"  # path to your db
+    port: "38746"
     username: "test" # username used for authentication
     password: "test" # password used for authentication
 

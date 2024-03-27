@@ -5,7 +5,7 @@ import ast
 import pandas as pd
 import sqlalchemy
 
-from utils import get_connection
+from utils import get_url_connection
 
 
 def _extract_intent(row):
@@ -35,7 +35,7 @@ def _extract_request(row):
 
 if __name__ == '__main__':
     # Подключение к базе.
-    url = get_connection()
+    url = get_url_connection()
     engine = sqlalchemy.create_engine(url, echo=True)
 
     # Запрос всей базы и сохранение в DataFrame.
