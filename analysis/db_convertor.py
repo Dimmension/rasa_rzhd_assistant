@@ -8,29 +8,34 @@ import sqlalchemy
 from utils import get_url_connection
 
 
-def _extract_intent(row):
-    """Extract data about intent."""
-    # Обработка и извлечние необходимых данных.
-    if row.intent_name:
-        intent_data.loc[len(intent_data.index)] = [row.intent_name]
+def extract_requests(df: pd.DataFrame) -> pd.DataFrame:
+    request_data = pd.DataFrame(columns=['input_channel', 'text'])
 
+    for _, row in df.iterrows():
+        # Предобработка строки в синтаксис python.
+        row.data = (
+            str(row.data)
+            .replace('null', 'None')
+            .replace('false', 'False')
+            .replace('true', 'True')
+        )
 
-def _extract_request(row):
-    """Extract data about user and input channel."""
-    # Предобработка строки в синтаксис python.
-    row.data = str(row.data).replace('null', 'None')
-    row.data = str(row.data).replace('false', 'False')
-    row.data = str(row.data).replace('true', 'True')
+        # Преобразование строки в python словарь.
+        rasa_data_col = ast.literal_eval(row.data)
 
-    # Преобразование строки в python код словаря.
-    rasa_data = ast.literal_eval(row.data)
+        # Извлечение событий сообщений пользователя и бота.
+        if (
+            rasa_data_col['event'] in ('user', 'bot')
+            and row.intent_name == 'request_search'
+        ):
+            request_data.loc[len(request_data.index)] = [
+                rasa_data_col['input_channel']
+                if rasa_data_col.get('input_channel')
+                else None,
+                rasa_data_col['text'],
+            ]
 
-    # Обработка и извлечние необходимых данных.
-    if rasa_data['event'] in ('user', 'bot') and row.intent_name == 'request_search':
-        request_data.loc[len(request_data.index)] = [
-            rasa_data['input_channel'] if rasa_data.get('input_channel') else None,
-            rasa_data['text'],
-        ]
+    return request_data
 
 
 if __name__ == '__main__':
@@ -42,13 +47,8 @@ if __name__ == '__main__':
     query = 'select * from events;'
     rasa_df = pd.read_sql_query(query, con=engine)
 
-    # Будующие csv таблицы.
-    request_data = pd.DataFrame(columns=['input_channel', 'text'])
-    intent_data = pd.DataFrame(columns=['intent_name'])
-
-    # Проход построчно по таблице.
-    rasa_df.apply(_extract_request, axis=1)
-    rasa_df.apply(_extract_intent, axis=1)
+    request_data = extract_requests(rasa_df)
+    intent_data = rasa_df.intent_name.dropna()
 
     # Сохранение в csv.
     intent_data.to_csv('intent_data.csv', index_label='id')
